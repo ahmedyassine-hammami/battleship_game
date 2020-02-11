@@ -73,19 +73,102 @@ public class Board implements IBoard {
 	public void putShip(AbstractShip ship, int x, int y) {
 		x--;
 		y--;
-		if (ship.orientation==Orientation.NORTH) {
-		
+		switch(ship.orientation) {
+		case NORTH :
+			{
+			boolean test = true;
 			int n = x-ship.taille+1;
 			if (n<0) System.out.println("Longueur du bateau est grande");
 			else {
 				int i=n;
 				while(i<x+1) {
+					if(this.grille_navire[i][y]!=0) {
+						System.out.println("Position occupée");
+						test=false;
+						break;
+						}
+					i++;
+					}
+				i=n;
+				while(i<x+1 && test) {
 					this.grille_navire[i][y]=ship.label;
 					i++;
+					}
 				}
-				
-				
+			break;
 			}
+		case EAST :
+			{
+			boolean test = false;
+			int n = y+ship.taille-1;
+			if (n>this.getSize()-1) System.out.println("Longueur du bateau est grande");
+			else {
+				int i=y;
+				
+				while(i<n+1) {
+					if(this.grille_navire[x][i]!=0) {
+						System.out.println("Position occupée");
+						test=false;
+						break;
+						}
+					i++;
+					}
+				i=y;
+				while(i<n+1 && test) {
+					this.grille_navire[x][i]=ship.label;
+					i++;
+					}
+				}
+			break;
+			}
+		case WEST :
+		{
+			boolean test = true;
+		int n = y-ship.taille+1;
+		if (n<0) System.out.println("Longueur du bateau est grande");
+		else {
+			int i=n;
+			while(i<y+1) {
+				if(this.grille_navire[x][i]!=0) {
+					System.out.println("Position occupée");
+					test=false;
+					break;
+					}
+				i++;
+				}
+			i=n;
+		
+			while(i<y+1 && test) {
+				this.grille_navire[x][i]=ship.label;
+				i++;
+				}
+			}
+		break;
+		}
+		case SOUTH :
+		{
+		boolean test = true;
+		int n = x+ship.taille-1;
+		if (n>this.getSize()-1) System.out.println("Longueur du bateau est grande");
+		else {
+			int i=x;
+			while(i<n+1) {
+				if(this.grille_navire[i][y]!=0) {
+					System.out.println("Position occupée");
+					test=false;
+					break;
+					}
+				i++;
+				}
+			i=n;
+			while(i<n+1 && test) {
+				this.grille_navire[i][y]=ship.label;
+				i++;
+				}
+			}
+		}
+		default:
+			break;
 		
 		
 		
