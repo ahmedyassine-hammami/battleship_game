@@ -6,10 +6,21 @@ public abstract class AbstractShip {
 	protected String name ;
 	protected int taille ;
 	protected Orientation orientation ;
+	protected int strikeCount ;
+	
+	/*Constructeur value*/
+	public AbstractShip(String nom, char label, int taille ,Orientation o)
+	{
+		this.name= nom ;
+		this.label=label ;
+		this.orientation=o;
+		this.taille=taille ;
+		this.strikeCount=0;
+		
+	}
 	
 	
 	/* Getters and Setters*/
-	
 	
 	public char getLabel() {
 		return label;
@@ -35,13 +46,9 @@ public abstract class AbstractShip {
 	public void setOrientation(Orientation orientation) {
 		this.orientation = orientation;
 	}
-	/* Constructeur value*/
-	public AbstractShip(String nom, char label, int taille ,Orientation o)
-	{
-		this.name= nom ;
-		this.label=label ;
-		this.orientation=o;
-		this.taille=taille ;
-		
+	
+	public void addStrike() {
+		this.strikeCount++;
 	}
+
 }

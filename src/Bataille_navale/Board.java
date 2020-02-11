@@ -3,8 +3,8 @@ package Bataille_navale;
 public class Board implements IBoard {
 	
 	protected String name;
-	protected char[][] grille_navire;
-	protected boolean[][] grille_frappe;
+	protected ShipState[][] grille_navire;
+	protected Boolean[][] grille_frappe;
 	/*getters and setters*/
 	public String getName() {
 		return name;
@@ -14,19 +14,19 @@ public class Board implements IBoard {
 		this.name = nom;
 	}
 
-	public char[][] getGrille_navire() {
+	public ShipState[][] getGrille_navire() {
 		return grille_navire;
 	}
 
-	public void setGrille_navire(char[][] navire) {
+	public void setGrille_navire(ShipState[][] navire) {
 		this.grille_navire = navire;
 	}
 
-	public boolean[][] getGrille_frappe() {
+	public Boolean[][] getGrille_frappe() {
 		return grille_frappe;
 	}
 
-	public void setGrille_frappe(boolean[][] frappe) {
+	public void setGrille_frappe(Boolean[][] frappe) {
 		this.grille_frappe = frappe;
 	}
 	
@@ -34,8 +34,8 @@ public class Board implements IBoard {
 
 	public Board(String nom, int taille) {
 		this.name=nom;
-		this.grille_frappe=new boolean[taille][taille];
-		this.grille_navire=new char[taille][taille];
+		this.grille_frappe=new Boolean[taille][taille];
+		this.grille_navire=new ShipState[taille][taille];
 	
 	}
 	/* Constructor with default size */
@@ -49,16 +49,21 @@ public class Board implements IBoard {
 		System.out.println("Grille navire");
 		for(int i=0;i<grille_navire.length;i++) {
 			for(int j=0;j<grille_navire.length;j++) {
-				if(this.grille_navire[i][j]==0) System.out.print(" . ");
-				else System.out.print(" "+this.grille_navire[i][j]+" ");
+				if(this.grille_navire[i][j]==null) System.out.print(" . ");
+				else System.out.print(" "+this.grille_navire[i][j].ship.label+" ");
 			}
 			System.out.println();
 		}
+		Boolean True = new Boolean(true);
+		Boolean False = new Boolean(false);
 		System.out.println("Grille frappe");
 		for(int i=0;i<grille_frappe.length;i++) {
 			for(int j=0;j<grille_frappe.length;j++) {
-				if(this.grille_frappe[i][j]==false) System.out.print(" . ");
-				else System.out.print(" x ");
+				if(this.grille_frappe[i][j]==null) System.out.print(" . ");
+				if(grille_frappe[i][j]==False) System.out.print("\033[37m x ");
+				if(this.grille_frappe[i][j]==True) System.out.print("\033[31m x ");
+				
+				
 			}
 			System.out.println();
 		}
@@ -82,7 +87,7 @@ public class Board implements IBoard {
 			else {
 				int i=n;
 				while(i<x+1) {
-					if(this.grille_navire[i][y]!=0) {
+					if(this.grille_navire[i][y]!=null) {
 						System.out.println("Position occupée");
 						test=false;
 						break;
@@ -90,8 +95,10 @@ public class Board implements IBoard {
 					i++;
 					}
 				i=n;
+				ShipState s = new ShipState();
+				s.ship=ship;
 				while(i<x+1 && test) {
-					this.grille_navire[i][y]=ship.label;
+					this.grille_navire[i][y]=s;
 					i++;
 					}
 				}
@@ -106,7 +113,7 @@ public class Board implements IBoard {
 				int i=y;
 				
 				while(i<n+1) {
-					if(this.grille_navire[x][i]!=0) {
+					if(this.grille_navire[x][i]!=null) {
 						System.out.println("Position occupée");
 						test=false;
 						break;
@@ -114,8 +121,10 @@ public class Board implements IBoard {
 					i++;
 					}
 				i=y;
+				ShipState s = new ShipState();
+				s.ship=ship;
 				while(i<n+1 && test) {
-					this.grille_navire[x][i]=ship.label;
+					this.grille_navire[x][i]=s;
 					i++;
 					}
 				}
@@ -129,7 +138,7 @@ public class Board implements IBoard {
 		else {
 			int i=n;
 			while(i<y+1) {
-				if(this.grille_navire[x][i]!=0) {
+				if(this.grille_navire[x][i]!=null) {
 					System.out.println("Position occupée");
 					test=false;
 					break;
@@ -137,9 +146,10 @@ public class Board implements IBoard {
 				i++;
 				}
 			i=n;
-		
+			ShipState s = new ShipState();
+			s.ship=ship;
 			while(i<y+1 && test) {
-				this.grille_navire[x][i]=ship.label;
+				this.grille_navire[x][i]=s;
 				i++;
 				}
 			}
@@ -153,7 +163,7 @@ public class Board implements IBoard {
 		else {
 			int i=x;
 			while(i<n+1) {
-				if(this.grille_navire[i][y]!=0) {
+				if(this.grille_navire[i][y]!=null) {
 					System.out.println("Position occupée");
 					test=false;
 					break;
@@ -161,8 +171,10 @@ public class Board implements IBoard {
 				i++;
 				}
 			i=n;
+			ShipState s = new ShipState();
+			s.ship=ship;
 			while(i<n+1 && test) {
-				this.grille_navire[i][y]=ship.label;
+				this.grille_navire[i][y]=s;
 				i++;
 				}
 			}
@@ -178,7 +190,7 @@ public class Board implements IBoard {
 
 	@Override
 	public boolean hasShip(int x, int y) {
-		if(this.grille_navire[x-1][y-1]!=0) return true;
+		if(this.grille_navire[x-1][y-1]!=null) return true;
 		return false;
 	}
 
