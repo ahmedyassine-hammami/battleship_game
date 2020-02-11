@@ -17,7 +17,7 @@ public class ShipState {
 	 }
 	 
 	 public String toString() {
-		 return "\033[31m"+ship.label;
+		 return (ColorUtil.colorize(ship.label, ColorUtil.Color.RED));
 	 }
 	 
 	 public boolean isSunk() {

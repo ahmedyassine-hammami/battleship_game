@@ -8,8 +8,6 @@ public class test {
 		b.putShip(ship,2,1);
 		b.putShip(ship,3,1);
 		b.print();
-		char a ='a';
-		System.out.println("\033[31m"+a);
 	}
 
 }

@@ -60,8 +60,8 @@ public class Board implements IBoard {
 		for(int i=0;i<grille_frappe.length;i++) {
 			for(int j=0;j<grille_frappe.length;j++) {
 				if(this.grille_frappe[i][j]==null) System.out.print(" . ");
-				if(grille_frappe[i][j]==False) System.out.print("\033[37m x ");
-				if(this.grille_frappe[i][j]==True) System.out.print("\033[31m x ");
+				if(grille_frappe[i][j]==False) System.out.print(ColorUtil.colorize(" x ", ColorUtil.Color.WHITE));
+				if(this.grille_frappe[i][j]==True) System.out.print(ColorUtil.colorize(" x ", ColorUtil.Color.RED));
 				
 				
 			}
