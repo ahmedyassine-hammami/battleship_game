@@ -2,13 +2,13 @@ package Bataille_navale;
 
 public class ShipState {
 	public AbstractShip ship ;
-	private boolean struck ;
-	
-	
+	public boolean struck = false;
+
+
 	public void addStrike() {
 		if(ship.strikeCount<ship.taille && struck==false) {
 			this.struck=true;
-			ship.addStrike();	
+			ship.strikeCount++;
 		}
 	}
 	

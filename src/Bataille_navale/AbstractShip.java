@@ -4,9 +4,9 @@ package Bataille_navale;
 public abstract class AbstractShip {
 	protected char label ;
 	protected String name ;
-	protected int taille ;
+	public int taille ;
 	protected Orientation orientation ;
-	protected int strikeCount ;
+	public int strikeCount ;
 	
 	/*Constructeur value*/
 	public AbstractShip(String nom, char label, int taille ,Orientation o)

@@ -3,8 +3,8 @@ package Bataille_navale;
 public class Board implements IBoard {
 	
 	protected String name;
-	protected ShipState[][] grille_navire;
-	protected Boolean[][] grille_frappe;
+	public ShipState[][] grille_navire;
+	public Boolean[][] grille_frappe;
 	/*getters and setters*/
 	public String getName() {
 		return name;
@@ -36,17 +36,29 @@ public class Board implements IBoard {
 		this.name=nom;
 		this.grille_frappe=new Boolean[taille][taille];
 		this.grille_navire=new ShipState[taille][taille];
+		
+		for(int i=0;i<grille_frappe.length;i++) {
+			for(int j=0;j<grille_frappe.length;j++) {
+				
+			}
+				
 	
-	}
+	}}
 	/* Constructor with default size */
 	public Board(String nom) {
 		this(nom,10);
 	}
 	
 	
+	
+	public void set() {
+		Boolean False = new Boolean(false);
+		this.grille_frappe[1][1]=False;
+	}
+	
 	/* print method */
 	public void print() {
-		System.out.println("Grille navire");
+		System.out.println("Ships : ");
 		for(int i=0;i<grille_navire.length;i++) {
 			for(int j=0;j<grille_navire.length;j++) {
 				if(this.grille_navire[i][j]==null) System.out.print(" . ");
@@ -55,13 +67,19 @@ public class Board implements IBoard {
 			System.out.println();
 		}
 		Boolean True = new Boolean(true);
-		Boolean False = new Boolean(false);
-		System.out.println("Grille frappe");
+		System.out.println("Hits : ");
+		//grille_frappe[2][2]=True;
+		
 		for(int i=0;i<grille_frappe.length;i++) {
 			for(int j=0;j<grille_frappe.length;j++) {
-				if(this.grille_frappe[i][j]==null) System.out.print(" . ");
-				if(grille_frappe[i][j]==False) System.out.print(ColorUtil.colorize(" x ", ColorUtil.Color.WHITE));
-				if(this.grille_frappe[i][j]==True) System.out.print(ColorUtil.colorize(" x ", ColorUtil.Color.RED));
+				
+				if(grille_frappe[i][j]==null) System.out.print(" . ");
+				else {
+					if(this.grille_frappe[i][j].booleanValue()==true) System.out.print(ColorUtil.colorize(" x ", ColorUtil.Color.RED));
+					else System.out.print(ColorUtil.colorize(" x ", ColorUtil.Color.WHITE));
+				}
+				
+				
 				
 				
 			}
@@ -95,9 +113,10 @@ public class Board implements IBoard {
 					i++;
 					}
 				i=n;
-				ShipState s = new ShipState();
-				s.ship=ship;
+				
 				while(i<x+1 && test) {
+					ShipState s = new ShipState();
+					s.ship=ship;
 					this.grille_navire[i][y]=s;
 					i++;
 					}
@@ -121,9 +140,10 @@ public class Board implements IBoard {
 					i++;
 					}
 				i=y;
-				ShipState s = new ShipState();
-				s.ship=ship;
+				
 				while(i<n+1 && test) {
+					ShipState s = new ShipState();
+					s.ship=ship;
 					this.grille_navire[x][i]=s;
 					i++;
 					}
@@ -146,9 +166,10 @@ public class Board implements IBoard {
 				i++;
 				}
 			i=n;
-			ShipState s = new ShipState();
-			s.ship=ship;
+			
 			while(i<y+1 && test) {
+				ShipState s = new ShipState();
+				s.ship=ship;
 				this.grille_navire[x][i]=s;
 				i++;
 				}
@@ -172,9 +193,10 @@ public class Board implements IBoard {
 				i++;
 				}
 			i=x;
-			ShipState s = new ShipState();
-			s.ship=ship;
+			
 			while(i<n+1 && test) {
+				ShipState s = new ShipState();
+				s.ship=ship;
 				this.grille_navire[i][y]=s;
 				i++;
 				}
@@ -191,8 +213,9 @@ public class Board implements IBoard {
 
 	@Override
 	public boolean hasShip(int x, int y) {
-		if(this.grille_navire[x-1][y-1]!=null) return true;
-		return false;
+		if(this.grille_navire[x-1][y-1]!=null&&this.grille_navire[x-1][y-1].isSunk()) 
+			return false;
+		return true;
 	}
 
 	@Override
@@ -205,17 +228,45 @@ public class Board implements IBoard {
 	public Boolean getHit(int x, int y) {
 		return this.grille_frappe[x-1][y-1];
 	}
-	
-	
-	/**
-	* Sends a hit at the given position
-	* @param x
-	* @param y
-	* @return status for the hit (eg : strike or miss)
-	*/
-	/*
-	public Hit sendHit(int x, int y) {
+
+	@Override
+	public Hit sendHit(int x, int y) throws Exception {
+		Hit hit = null ;
+		Boolean False = new Boolean("False");
+		Boolean True = new Boolean("True");
+		 
+		if(grille_frappe[x-1][y-1]==null) {
+
+			if(grille_navire[x-1][y-1]==null) {
+				grille_frappe[x-1][y-1]=False;
+				return Hit.MISS ;
+				}
+			if(grille_navire[x-1][y-1]!=null) {
+				grille_frappe[x-1][y-1]=True;
+				grille_navire[x-1][y-1].addStrike();
+				hit=Hit.STIKE;
+				}
+			if(grille_navire[x-1][y-1].isSunk()) {
+				hit = Hit.fromInt(grille_navire[x-1][y-1].ship.getTaille());
+			}
+		}
 		
-	};*/
+		
+		else {
+			throw new Exception("Position déja frappée");	
+		}
+		
+		
+		
+		
+		
+
+
+		return hit ;
+	}
+	
+
+	
+
 	
 }
