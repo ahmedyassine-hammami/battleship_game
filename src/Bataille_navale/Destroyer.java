@@ -8,6 +8,14 @@ public class Destroyer extends AbstractShip {
 	public Destroyer() {
 		super("Destroyer",'D',2,Orientation.EAST);
 	}
+	@Override
+	public void setOrientation(Orientation orientation) {
+		this.orientation = orientation;
+		
+	}
+	
+
+	
 	
 
 }

@@ -9,6 +9,12 @@ public class AirCraftCarrier extends AbstractShip {
 	public AirCraftCarrier() {
 		super("AirCraft-Carrier",'C',5,Orientation.EAST);
 	}
+	@Override
+	public void setOrientation(Orientation orientation) {
+		// TODO Auto-generated method stub
+		this.orientation = orientation;
+		
+	}
 	
 
 }

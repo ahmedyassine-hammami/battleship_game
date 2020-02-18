@@ -6,7 +6,7 @@ public class ShipState {
 	
 	
 	public void addStrike() {
-		if(ship.strikeCount<ship.taille) {
+		if(ship.strikeCount<ship.taille && struck==false) {
 			this.struck=true;
 			ship.addStrike();	
 		}

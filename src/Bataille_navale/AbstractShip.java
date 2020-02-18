@@ -43,9 +43,8 @@ public abstract class AbstractShip {
 	public Orientation getOrientation() {
 		return orientation;
 	}
-	public void setOrientation(Orientation orientation) {
-		this.orientation = orientation;
-	}
+	public abstract void setOrientation(Orientation orientation) ;
+	
 	
 	public void addStrike() {
 		this.strikeCount++;

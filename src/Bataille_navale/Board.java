@@ -75,7 +75,7 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public void putShip(AbstractShip ship, int x, int y) {
+	public void putShip(AbstractShip ship, int x, int y) throws ExceptionShipPosition {
 		x--;
 		y--;
 		switch(ship.orientation) {
@@ -83,14 +83,14 @@ public class Board implements IBoard {
 			{
 			boolean test = true;
 			int n = x-ship.taille+1;
-			if (n<0) System.out.println("Longueur du bateau est grande");
+			if (n<0) 
+				throw new ExceptionShipPosition("Size of ship is big");
 			else {
 				int i=n;
 				while(i<x+1) {
 					if(this.grille_navire[i][y]!=null) {
-						System.out.println("Position occupée");
 						test=false;
-						break;
+						throw new ExceptionShipPosition("Occuped position, Can't put the ship");
 						}
 					i++;
 					}
@@ -106,17 +106,17 @@ public class Board implements IBoard {
 			}
 		case EAST :
 			{
-			boolean test = false;
+			boolean test = true;
 			int n = y+ship.taille-1;
-			if (n>this.getSize()-1) System.out.println("Longueur du bateau est grande");
+			if (n>this.getSize()-1) 
+				throw new ExceptionShipPosition("Size of ship is big");
 			else {
 				int i=y;
 				
 				while(i<n+1) {
 					if(this.grille_navire[x][i]!=null) {
-						System.out.println("Position occupée");
 						test=false;
-						break;
+						throw new ExceptionShipPosition("Occuped position, Can't put the ship");
 						}
 					i++;
 					}
@@ -134,14 +134,14 @@ public class Board implements IBoard {
 		{
 			boolean test = true;
 		int n = y-ship.taille+1;
-		if (n<0) System.out.println("Longueur du bateau est grande");
+		if (n<0) 
+			throw new ExceptionShipPosition("Size of ship is big");
 		else {
 			int i=n;
 			while(i<y+1) {
 				if(this.grille_navire[x][i]!=null) {
-					System.out.println("Position occupée");
 					test=false;
-					break;
+					throw new ExceptionShipPosition("Occuped position, Can't put the ship");
 					}
 				i++;
 				}
@@ -159,18 +159,19 @@ public class Board implements IBoard {
 		{
 		boolean test = true;
 		int n = x+ship.taille-1;
-		if (n>this.getSize()-1) System.out.println("Longueur du bateau est grande");
+		if (n>this.getSize()-1) 
+			throw new ExceptionShipPosition("Size of ship is big");
 		else {
 			int i=x;
+			
 			while(i<n+1) {
 				if(this.grille_navire[i][y]!=null) {
-					System.out.println("Position occupée");
 					test=false;
-					break;
+					throw new ExceptionShipPosition("Occuped position, Can't put the ship");
 					}
 				i++;
 				}
-			i=n;
+			i=x;
 			ShipState s = new ShipState();
 			s.ship=ship;
 			while(i<n+1 && test) {
@@ -204,5 +205,17 @@ public class Board implements IBoard {
 	public Boolean getHit(int x, int y) {
 		return this.grille_frappe[x-1][y-1];
 	}
+	
+	
+	/**
+	* Sends a hit at the given position
+	* @param x
+	* @param y
+	* @return status for the hit (eg : strike or miss)
+	*/
+	/*
+	public Hit sendHit(int x, int y) {
+		
+	};*/
 	
 }
