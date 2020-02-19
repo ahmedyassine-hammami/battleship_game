@@ -58,19 +58,40 @@ public class Board implements IBoard {
 	
 	/* print method */
 	public void print() {
+		System.out.println();
 		System.out.println("Ships : ");
+		System.out.println();
+		System.out.print("    ");
+		for (int l =0;l<grille_navire.length;l++) {
+			char c =(char)(65+l);
+			System.out.print(" "+c+" ");
+		}
+		System.out.println();
+		
 		for(int i=0;i<grille_navire.length;i++) {
+			if (i<grille_navire.length-1) System.out.print((i+1)+" | ");
+			else System.out.print((i+1)+"| ");
+			
 			for(int j=0;j<grille_navire.length;j++) {
 				if(this.grille_navire[i][j]==null) System.out.print(" . ");
 				else System.out.print(" "+this.grille_navire[i][j].ship.label+" ");
 			}
 			System.out.println();
 		}
+		System.out.println();
 		Boolean True = new Boolean(true);
 		System.out.println("Hits : ");
-		//grille_frappe[2][2]=True;
+		System.out.println();
+		System.out.print("    ");
+		for (int l =0;l<grille_navire.length;l++) {
+			char c =(char)(65+l);
+			System.out.print(" "+c+" ");
+		}
+		System.out.println();
 		
 		for(int i=0;i<grille_frappe.length;i++) {
+			if (i<grille_frappe.length-1) System.out.print((i+1)+" | ");
+			else System.out.print((i+1)+"| ");
 			for(int j=0;j<grille_frappe.length;j++) {
 				
 				if(grille_frappe[i][j]==null) System.out.print(" . ");
@@ -78,10 +99,7 @@ public class Board implements IBoard {
 					if(this.grille_frappe[i][j].booleanValue()==true) System.out.print(ColorUtil.colorize(" x ", ColorUtil.Color.RED));
 					else System.out.print(ColorUtil.colorize(" x ", ColorUtil.Color.WHITE));
 				}
-				
-				
-				
-				
+	
 			}
 			System.out.println();
 		}
@@ -251,8 +269,8 @@ public class Board implements IBoard {
 			}
 		}
 		
-		
 		else {
+			hit = Hit.MISS ;
 			throw new Exception("Position déja frappée");	
 		}
 		
