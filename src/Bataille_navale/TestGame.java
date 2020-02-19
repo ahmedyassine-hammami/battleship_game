@@ -32,10 +32,11 @@ public class TestGame {
 		BattleShipsAI battleAI= new  BattleShipsAI(b1, b1);
 		int[] coord = new int[2] ;
 		battleAI.putShips(ships);
+		b1.print();
 		
-
 		int i = 1;
 		while(destroyedShips<ships.size())
+		//while(i<50)
 		{
 			hit=battleAI.sendHit(coord);
 			if(hit.toString().compareTo("touché")==0 || hit.toString().compareTo("manqué")==0) 
@@ -45,7 +46,7 @@ public class TestGame {
 				destroyedShips++;
 			}
 			i++;
-			sleep(120);
+			sleep(20);
 				
 		}
 		

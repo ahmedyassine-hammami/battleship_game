@@ -73,7 +73,7 @@ public class Board implements IBoard {
 			else System.out.print((i+1)+"| ");
 			
 			for(int j=0;j<grille_navire.length;j++) {
-				if(this.grille_navire[i][j]==null) System.out.print(" . ");
+				if(this.grille_navire[i][j]==null||this.grille_navire[i][j].isSunk()) System.out.print(" . ");
 				else System.out.print(" "+this.grille_navire[i][j].ship.label+" ");
 			}
 			System.out.println();
@@ -103,6 +103,7 @@ public class Board implements IBoard {
 			}
 			System.out.println();
 		}
+		System.out.println();
 	}
 
 	@Override
