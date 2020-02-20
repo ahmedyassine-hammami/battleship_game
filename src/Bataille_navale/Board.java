@@ -57,7 +57,8 @@ public class Board implements IBoard {
 	}
 	
 	/* print method */
-	public void print() {
+	public void print(Boolean[][] grille_frappe_adverse) {
+		String ch = new String();
 		System.out.println();
 		System.out.println("Ships : ");
 		System.out.println();
@@ -74,7 +75,16 @@ public class Board implements IBoard {
 			
 			for(int j=0;j<grille_navire.length;j++) {
 				if(this.grille_navire[i][j]==null||this.grille_navire[i][j].isSunk()) System.out.print(" . ");
-				else System.out.print(" "+this.grille_navire[i][j].ship.label+" ");
+				else {
+					if(grille_frappe_adverse[i][j]==null) System.out.print(" "+this.grille_navire[i][j].ship.label+" ");
+					else {
+					char c = this.grille_navire[i][j].ship.label;
+					String s=String.valueOf(c);  
+					ch=" "+s+" ";
+					if(grille_frappe_adverse[i][j].booleanValue()==true) System.out.print(ColorUtil.colorize(ch, ColorUtil.Color.RED));
+					else System.out.print(ColorUtil.colorize(ch, ColorUtil.Color.WHITE));}
+				}
+			//else System.out.print(" "+this.grille_navire[i][j].ship.label+" ");
 			}
 			System.out.println();
 		}
@@ -238,8 +248,19 @@ public class Board implements IBoard {
 	}
 
 	@Override
-	public void setHit(boolean hit, int x, int y) {
-		this.grille_frappe[x-1][y-1]=hit;
+	public void setHit(boolean hit, int x, int y) throws Exception {
+		Boolean False = new Boolean("False");
+		Boolean True = new Boolean("True");
+		
+		if(grille_frappe[x-1][y-1]==null) {
+			if(hit)	grille_frappe[x-1][y-1]=True;
+			else grille_frappe[x-1][y-1]=False;
+		}
+		else {
+			throw new Exception("Position déja frappée");	
+		}
+
+
 		
 	}
 
@@ -257,11 +278,11 @@ public class Board implements IBoard {
 		if(grille_frappe[x-1][y-1]==null) {
 
 			if(grille_navire[x-1][y-1]==null) {
-				grille_frappe[x-1][y-1]=False;
+				//grille_frappe[x-1][y-1]=False;
 				return Hit.MISS ;
 				}
 			if(grille_navire[x-1][y-1]!=null) {
-				grille_frappe[x-1][y-1]=True;
+				//grille_frappe[x-1][y-1]=True;
 				grille_navire[x-1][y-1].addStrike();
 				hit=Hit.STIKE;
 				}
@@ -272,14 +293,8 @@ public class Board implements IBoard {
 		
 		else {
 			hit = Hit.MISS ;
-			throw new Exception("Position déja frappée");	
+			//throw new Exception("Position déja frappée");	
 		}
-		
-		
-		
-		
-		
-
 
 		return hit ;
 	}

@@ -2,11 +2,8 @@ package Bataille_navale;
 
 import java.io.Serializable;
 import java.util.*;
+@SuppressWarnings("serial")
 public class BattleShipsAI implements Serializable {
-
-    /*
-     * ** Attributs
-     */
 
     /**
      * grid size.

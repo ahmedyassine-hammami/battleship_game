@@ -32,8 +32,9 @@ public interface IBoard {
      * @param hit true if the hit must be set to successful
      * @param x
      * @param y
+     * @throws Exception 
      */
-    void setHit(boolean hit, int x, int y);
+    void setHit(boolean hit, int x, int y) throws Exception;
 
     /**
      * Get the state of a hit at the given position

@@ -7,11 +7,15 @@ public class Player {
     /* **
      * Attributs
      */
-    protected Board board;
-    protected Board opponentBoard;
+	protected Board opponentBoard;
     protected int destroyedCount;
     protected AbstractShip[] ships;
     protected boolean lose;
+    protected Board board;
+     
+
+
+	
 
     /* **
      * Constructeur
@@ -57,8 +61,8 @@ public class Player {
             //When ship placement is successful
             if(Safeinput) {
             	i++;
-              	done = (i==5);
-              	board.print();
+              	done = (i==ships.length);
+              	//board.print();
             }
    
         } while (!done);
@@ -69,7 +73,17 @@ public class Player {
     
 
 
-    public Hit sendHit(int[] coords) throws Exception {
+    public int getDestroyedCount() {
+		return destroyedCount;
+	}
+
+
+	public void setDestroyedCount(int destroyedCount) {
+		this.destroyedCount = destroyedCount;
+	}
+
+
+	public Hit sendHit(int[] coords) throws Exception {
         boolean done=false;
         Hit hit = null;
 
@@ -81,6 +95,10 @@ public class Player {
             // TODO call sendHit on this.opponentBoard
           
             hit=this.opponentBoard.sendHit(hitInput.y+1, hitInput.x+1);
+            board.setHit(hit != Hit.MISS,hitInput.y+1,hitInput.x+1);
+            
+            
+            
             done=true;
             if (done) {
             coords[0]=hitInput.y+1;

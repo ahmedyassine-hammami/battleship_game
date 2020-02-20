@@ -49,5 +49,12 @@ public abstract class AbstractShip {
 	public void addStrike() {
 		this.strikeCount++;
 	}
+	
+	 
+	 public boolean isSunk() {
+		 if(this.strikeCount==this.taille) return true ;
+		 return false;
+	 }
+	 
 
 }

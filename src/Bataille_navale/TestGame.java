@@ -15,7 +15,7 @@ public class TestGame {
 		AirCraftCarrier c = new AirCraftCarrier();		
 		
 		Board  b1 =new Board("B1",size);
-		
+		Board  b2 =new Board("B2",size);
 		List<AbstractShip> ships = new ArrayList<AbstractShip>();
 		ships.add(d);
 		ships.add(s1);
@@ -28,17 +28,24 @@ public class TestGame {
 		
 		for (int l=0;l<size;l++)
 			label[l]=(char)(65+l);
+		int[] coords = new int[2] ;
 	
+		
+		/**************BATTLE SHIP ARTIFICIAL INTELLIGENCE**************/
+		/*
 		BattleShipsAI battleAI= new  BattleShipsAI(b1, b1);
+		AIPlayer player = new AIPlayer(b1,b1, ships);
 		int[] coord = new int[2] ;
-		battleAI.putShips(ships);
-		b1.print();
+
+		//battleAI.putShips(ships);
+		player.putShips();
+		b1.print(b1.getGrille_frappe());
 		
 		int i = 1;
 		while(destroyedShips<ships.size())
-		//while(i<50)
 		{
-			hit=battleAI.sendHit(coord);
+			//hit=battleAI.sendHit(coord);
+			hit=player.sendHit(coord);
 			if(hit.toString().compareTo("touché")==0 || hit.toString().compareTo("manqué")==0) 
 				System.out.println("Hit N°"+i+" state : "+hit.toString()+" in "+label[coord[1]]+""+(coord[0]+1));
 			else {
@@ -49,28 +56,39 @@ public class TestGame {
 			sleep(20);
 				
 		}
+		b1.print(b1.grille_frappe);
+		*/
+		/***************************************************************/
 		
-		b1.print();
 		
+		/********Human Player VS Artificial Intelligence Player********/
+		/*
+		Game game = new Game();
+		game.init(size, ships);
+		game.run();
+		*/
+		/*************************************************************/
+
+		boolean strike;
+		boolean test=false;
+
+		
+		/*
+Player p = new Player(b1,b2,ships);
+Player p1 = new Player(b2,b1,ships);
+p.putShips();
+p1.putShips();
+while(true) {
+hit = p.sendHit(coords);
+// TODO player1 send a hit
+boolean strike = hit != Hit.MISS; 
+b1.setHit(strike, coords[0], coords[1]);
+
+b1.print();
+*/
+}
+
 	
-		 //b1.print();
-		//Player player = new Player(b1,b2, ships);
-		//player.putShips();
-		//b2.putShip(d, 2, 1);
-		
-		//hit = b1.sendHit(1,1);
-		//hit = b1.sendHit(1,1);
-		//hit = b2.sendHit(1,1);
-		
-	
-		//player.sendHit(coord);
-		
-		
-		//System.out.println(b2.hasShip(coord[0], coord[1]));
-		//System.out.println(hit);
-		//System.out.println(b1.sendHit(2,1).toString()+" is completely destroyed");
-		//b2.print();
-	}
 
 
 private static void sleep(int ms) {
