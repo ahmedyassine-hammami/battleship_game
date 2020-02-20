@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 //import java.util.Scanner;
 
 public class Game {
@@ -17,38 +18,39 @@ public class Game {
      * *** Attributes
      */
     List<AbstractShip> ships = new ArrayList<AbstractShip>();
-    public Player player1= new Player(null, null,ships);
-    public Player player2 ;
-   // private Scanner sin;
-
+    private Player player1= new Player(null, null,ships);
+    private Player player2 ;
+    private Scanner sc = new Scanner(System.in);
    //Constructors
     
     public Game() {
     }
     
-    public boolean updateScore() {
-        for (Player player : new Player[] { player1, player2 }) {
-            int destroyed = 0;
-            for (AbstractShip ship : player.getShips()) {
-                if (ship.isSunk()) {
-                    destroyed++;
-                }
-            }
-
-            player.destroyedCount = destroyed;
-            player.lose = destroyed == player.getShips().length;
-            if (player.lose) {
-                return true;
+    public boolean updateScore(Player p) {
+    	
+        int destroyed = 0;
+        for (AbstractShip ship : p.getShips()) {
+            if (ship.isSunk()) {
+                destroyed++;
             }
         }
-        return false;
-    }
 
-    public void init(int size,List<AbstractShip> ships) throws ClassNotFoundException, IOException {
+        p.destroyedCount = destroyed;
+        p.lose = destroyed == p.getShips().length;
+        if (destroyed == p.getShips().length) {
+            return true;
+        }
+    
+    return false;
+}
+
+    public void init(int size,List<AbstractShip> ships,List<AbstractShip> ships1) throws ClassNotFoundException, IOException {
         //if (!loadSave()) {
             // Initialize attributes
+    		
             System.out.println("Entrer votre nom:");
-
+            String str = sc.nextLine();
+            System.out.println("Joueur 1 : " + str);
             // TODO use a scanner to read player name
 
             //Initialize boards
@@ -62,7 +64,7 @@ public class Game {
        
     		
             //Initialize Player2;
-    		Player p = new AIPlayer(b2, b1, ships);
+    		Player p = new AIPlayer(b2, b1, ships1);
     		this.player2=p;
            
             
@@ -84,7 +86,7 @@ public class Game {
         Board board1 = player1.board;
         Board board2 = player2.board;
         Hit hit;
-
+        boolean test;
         // main loop
         boolean done=false;
         boolean strike;
@@ -93,8 +95,7 @@ public class Game {
             hit = player1.sendHit(coords);
             // TODO player1 send a hit
             strike = hit != Hit.MISS;
-           
-            done = updateScore();
+            done=updateScore(player2);
             
             System.out.println(makeHitMessage(false /* outgoing hit */, coords, hit));
 
@@ -105,7 +106,7 @@ public class Game {
                     hit = Hit.MISS; 
                     //player2 send a hit.
                     hit = player2.sendHit(coords);
-                    
+                    done=updateScore(player1);
                     strike = hit != Hit.MISS;
                     coords[0]++;
                     coords[1]++;
@@ -113,19 +114,18 @@ public class Game {
                         board1.print(board2.grille_frappe);
                     }
                     System.out.println(makeHitMessage(true /* incoming hit */, coords, hit));
-                    done = updateScore();
-
                     if (!done) {
                         save();
                     }
                 } while (strike && !done);
             }
+            
             player1.board.print(board2.getGrille_frappe());
             //player2.board.print(board1.getGrille_frappe());
         } while (!done);
 
         //SAVE_FILE.delete();
-        System.out.println(String.format("joueur %d gagne", player1.lose ? 1 : 2));
+        System.out.println(String.format("Joueur %d gagne", player1.lose ? 2 : 1));
         //sin.close();
     }
 

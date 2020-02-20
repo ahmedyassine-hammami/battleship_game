@@ -257,7 +257,7 @@ public class Board implements IBoard {
 			else grille_frappe[x-1][y-1]=False;
 		}
 		else {
-			throw new Exception("Position déja frappée");	
+			//throw new Exception("Position déja frappée");	
 		}
 
 
@@ -275,7 +275,7 @@ public class Board implements IBoard {
 		Boolean False = new Boolean("False");
 		Boolean True = new Boolean("True");
 		 
-		if(grille_frappe[x-1][y-1]==null) {
+		
 
 			if(grille_navire[x-1][y-1]==null) {
 				//grille_frappe[x-1][y-1]=False;
@@ -284,17 +284,11 @@ public class Board implements IBoard {
 			if(grille_navire[x-1][y-1]!=null) {
 				//grille_frappe[x-1][y-1]=True;
 				grille_navire[x-1][y-1].addStrike();
-				hit=Hit.STIKE;
+				hit = Hit.STIKE;
 				}
-			if(grille_navire[x-1][y-1].isSunk()) {
+			if (grille_navire[x-1][y-1].isSunk())  {
 				hit = Hit.fromInt(grille_navire[x-1][y-1].ship.getTaille());
 			}
-		}
-		
-		else {
-			hit = Hit.MISS ;
-			//throw new Exception("Position déja frappée");	
-		}
 
 		return hit ;
 	}

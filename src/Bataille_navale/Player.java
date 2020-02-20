@@ -62,7 +62,7 @@ public class Player {
             if(Safeinput) {
             	i++;
               	done = (i==ships.length);
-              	//board.print();
+              	//board.print(board.getGrille_frappe());
             }
    
         } while (!done);
@@ -86,8 +86,8 @@ public class Player {
 	public Hit sendHit(int[] coords) throws Exception {
         boolean done=false;
         Hit hit = null;
-
-
+        boolean strike ;
+        hit = Hit.MISS;
         do {
         	try {
             System.out.println("où frapper?");
@@ -95,9 +95,8 @@ public class Player {
             // TODO call sendHit on this.opponentBoard
           
             hit=this.opponentBoard.sendHit(hitInput.y+1, hitInput.x+1);
-            board.setHit(hit != Hit.MISS,hitInput.y+1,hitInput.x+1);
-            
-            
+            strike = hit != Hit.MISS;
+            this.board.setHit(strike, hitInput.y+1, hitInput.x+1);
             
             done=true;
             if (done) {
