@@ -7,9 +7,14 @@ import java.util.List;
 import java.util.Scanner;
 //import java.util.Scanner;
 
-public class Game {
+public class Game implements Serializable {
 
-    /*
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/*
      * *** Constant
      */
     public static final File SAVE_FILE = new File("savegame.dat");
@@ -18,8 +23,8 @@ public class Game {
      * *** Attributes
      */
     List<AbstractShip> ships = new ArrayList<AbstractShip>();
-    private Player player1= new Player(null, null,ships);
-    private Player player2 ;
+    public Player player1= new Player(null, null,ships);
+    public Player player2 ;
     private Scanner sc = new Scanner(System.in);
    //Constructors
     
@@ -82,6 +87,7 @@ public class Game {
   
     
     public void run() throws Exception {
+    	//WriterReader w =new WriterReader();
         int[] coords = new int[2];
         Board board1 = player1.board;
         Board board2 = player2.board;
@@ -98,7 +104,7 @@ public class Game {
             done=updateScore(player2);
             
             System.out.println(makeHitMessage(false /* outgoing hit */, coords, hit));
-
+           // w.save(SAVE_FILE,this);
             //save();
 
             if (!done && !strike) {
@@ -115,7 +121,7 @@ public class Game {
                     }
                     System.out.println(makeHitMessage(true /* incoming hit */, coords, hit));
                     if (!done) {
-                        save();
+                    	// w.save(SAVE_FILE,this);
                     }
                 } while (strike && !done);
             }

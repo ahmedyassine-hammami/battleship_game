@@ -1,5 +1,6 @@
 package Bataille_navale;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,11 @@ public class GameTwoPlayers {
 	    private Player player1= new Player(null, null,ships);
 	    private Player player2=new Player(null, null,ships);;
 	    private Scanner sc = new Scanner(System.in);
+	    private File SAVE_FILE1 = new File("save1.ser");
+	    private File SAVE_FILE2 = new File("save2.ser");
 	    private String str1;
 	    private String str2;
+	    private Writer w =new Writer();
 	   //Constructors
 	
 	    public boolean updateScore(Player p) {
@@ -35,7 +39,9 @@ public class GameTwoPlayers {
 	    }
 
 	    public void init(int size,List<AbstractShip> ships,List<AbstractShip> ships1) throws ClassNotFoundException, IOException, ExceptionShipPosition {
-	        //if (!loadSave()) {
+	    	
+		    
+	   
 	            // Initialize attributes
 	            System.out.println("Entrer le nom du joueur 1 :");
 	            str1 = sc.nextLine();
@@ -51,23 +57,42 @@ public class GameTwoPlayers {
 	    		
 	    		Player p1 = new Player(b1, b2, ships);
 	    		this.player1=p1;
-	       
+	    		player1.board.playerName=str1;
 	    		
 	            //Initialize Player2;
 	    		Player p2 = new Player(b2, b1, ships1);
 	    		this.player2=p2;
-	       
+	    		player2.board.playerName=str2;
 	            // place player ships randomly
 	    		this.putShipsRandomly(ships,player1.board);
 	            this.putShipsRandomly(ships1,player2.board);
 	            System.out.println("Ships are putted randomly in two boards");
-	           
-	            
-	            
-	     
+	            //player1.board.print(player2.board.getGrille_frappe());
+	            //player2.board.print(player1.board.getGrille_frappe());
 	    }
-
-    public void run() throws Exception {
+	   
+	    
+	    
+	    public void init1(int size,List<AbstractShip> ships,List<AbstractShip> ships1) throws ClassNotFoundException, IOException, ExceptionShipPosition {
+	    	Board a = w.load(SAVE_FILE1);
+    		Board b= w.load(SAVE_FILE2);
+   
+	    	Board  b1 =new Board("B1",size);
+	    	Board  b2 =new Board("B2",size);
+	    	Player p1 = new Player(b1, b2, ships);
+    		this.player1=p1;
+    		Player p2 = new Player(b2, b1, ships1);
+    		this.player2=p2;
+    		str1=a.playerName;
+    		str2=b.playerName;
+    		this.player1.board=a;
+    		this.player1.opponentBoard=b;
+    		this.player2.board=b;
+    		this.player2.opponentBoard=a;
+	    }
+	    	
+	    	
+	   public void run() throws Exception {
         int[] coords = new int[2];
 
         Hit hit;
@@ -89,8 +114,6 @@ public class GameTwoPlayers {
             this.printHits(player1,this.str1);
             done=updateScore(player2);
 
-            save();
-            
 
             if (!done && !strike) {
                 do {
@@ -111,15 +134,17 @@ public class GameTwoPlayers {
                     this.printHits(player2,this.str2);
                     done=updateScore(player1);
                 
-                    //if (!done) {
-                      //  save();
-                    //}
+                    if (!done) {
+                    	w.save(SAVE_FILE1, this.player1.board);
+                    	w.save(SAVE_FILE2, this.player2.board);
+                    }
                 } while (strike && !done);
             }
 
         } while (!done);
 
-        //SAVE_FILE.delete();
+        SAVE_FILE1.delete();
+        SAVE_FILE2.delete();
         System.out.println(String.format("Joueur %d gagne", player1.lose ? 2 : 1));
         sc.close();
     }

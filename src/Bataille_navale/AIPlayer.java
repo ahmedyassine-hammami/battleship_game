@@ -1,9 +1,14 @@
 package Bataille_navale;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AIPlayer extends Player {
-    /*
+public class AIPlayer extends Player implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/*
      * ** Attribut
      */
     private BattleShipsAI ai;

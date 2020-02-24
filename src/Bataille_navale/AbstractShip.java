@@ -1,7 +1,12 @@
 package Bataille_navale;
 
+import java.io.Serializable;
 
-public abstract class AbstractShip {
+public abstract class AbstractShip implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected char label ;
 	protected String name ;
 	public int taille ;

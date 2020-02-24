@@ -1,10 +1,19 @@
 package Bataille_navale;
 
-public class Board implements IBoard {
+import java.io.Serializable;
+
+public class Board implements IBoard,Serializable {
 	
+	/**
+	 * 
+	 */
+	
+	private static final long serialVersionUID = 1L;
 	protected String name;
 	public ShipState[][] grille_navire;
 	public Boolean[][] grille_frappe;
+	
+	public String playerName;
 	/*getters and setters*/
 	public String getName() {
 		return name;

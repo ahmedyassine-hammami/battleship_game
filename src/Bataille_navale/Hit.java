@@ -1,8 +1,9 @@
 package Bataille_navale;
 
+import java.io.Serializable;
 import java.util.NoSuchElementException;
 
-public enum Hit {
+public enum Hit implements Serializable {
     MISS(-1, "manqué"),
     STIKE(-2, "touché"),
     DESTROYER(2, "Frégate"),

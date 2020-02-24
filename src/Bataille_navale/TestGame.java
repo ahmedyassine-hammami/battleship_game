@@ -1,6 +1,9 @@
 package Bataille_navale;
 
-import java.io.Console;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -28,10 +31,10 @@ public class TestGame {
 		List<AbstractShip> ships = new ArrayList<AbstractShip>();
 		List<AbstractShip> ships1 = new ArrayList<AbstractShip>();
 		ships.add(d);
-		ships.add(s1);
-		ships.add(s2);
-		ships.add(bs);
-		ships.add(c);
+		//ships.add(s1);
+		//ships.add(s2);
+		//ships.add(bs);
+		//ships.add(c);
 		
 		ships1.add(d1);
 		ships1.add(s11);
@@ -53,7 +56,6 @@ public class TestGame {
 		int[] coords = new int[2] ;
 		int[] coords1 = new int[2] ;
 		
-		
 	    System.out.println("--------------Battleship game-------------");
 	    System.out.println("[1] : Player VS Computer");
 	    System.out.println("[2] : Two players mode");
@@ -62,18 +64,33 @@ public class TestGame {
 	    int l;
 	    Scanner s = new Scanner(System.in);  
 	    l = s.nextInt();
-		
 	      switch(l) {
 	       case 1:
 	    	   	Game game = new Game();
+	    	   	
 	   			game.init(size, ships,ships1);
+	   			
 	   			game.run();
 	   			break;
 	       case 2:
-	    	   GameTwoPlayers gameTwo = new GameTwoPlayers();
-	    	   gameTwo.init(size, ships, ships1);
-	    	   gameTwo.run();
-	    	   break;
+	    	System.out.println("---Continuer un jeu existant?---");
+	    	System.out.println("[1] : Non");
+	 	    System.out.println("[2] : Oui");
+	   	    int l1;
+	   	    Scanner s5 = new Scanner(System.in);  
+	   	    l1 = s5.nextInt();
+	   	    if(l1==1) {
+	   	    	GameTwoPlayers gameTwo = new GameTwoPlayers();
+		    	   gameTwo.init(size, ships, ships1);
+		    	   gameTwo.run();
+		    	   break;
+	   	    }
+	 	    if(l1==2) {
+	   	    	   GameTwoPlayers gameTwo1 = new GameTwoPlayers();
+		    	   gameTwo1.init1(size, ships, ships1);
+		    	   gameTwo1.run();
+		    	   break;
+	   	    }
 	       case 3:
 	    	BattleShipsAI battleAI= new  BattleShipsAI(b1, b1);
 	   		AIPlayer player = new AIPlayer(b1,b1, ships);
@@ -104,100 +121,7 @@ public class TestGame {
 	       default:
 	    	   break;
 	       
-	     }
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/**************Simple Player*********************/
-		/*
-		Player p1 = new Player(b1,b2,ships);
-		Player p2 = new Player(b2,b1,ships1);
-
-		b1=p1.board;
-		b2=p2.board;
-		p1.putShips();
-		p1.board.print(p1.opponentBoard.getGrille_frappe());
-		
-		p2.putShips();
-		p2.board.print(p2.opponentBoard.getGrille_frappe());
-		
-		while (true) {
-			
-			hit=p1.sendHit(coords);
-			p1.board.print(p1.opponentBoard.getGrille_frappe());
-			System.out.println(hit);
-		
-			
-			hit1=p2.sendHit(coords1);
-			p2.board.print(p2.opponentBoard.getGrille_frappe());
-			System.out.println(hit1);
-			
-			
-		}
-		*/
-		/*************************************************/
-		
-		/**************BATTLE SHIP ARTIFICIAL INTELLIGENCE**************/
-		/*
-		BattleShipsAI battleAI= new  BattleShipsAI(b1, b1);
-		AIPlayer player = new AIPlayer(b1,b1, ships);
-		int[] coord = new int[2] ;
-
-		//battleAI.putShips(ships);
-		player.putShips();
-		b1.print(b1.getGrille_frappe());
-		
-		int i = 1;
-		while(destroyedShips<ships.size())
-		{
-			//hit=battleAI.sendHit(coord);
-			hit=player.sendHit(coord);
-			if(hit.toString().compareTo("touché")==0 || hit.toString().compareTo("manqué")==0) 
-				System.out.println("Hit N°"+i+" state : "+hit.toString()+" in "+label[coord[1]]+""+(coord[0]+1));
-			else {
-				System.out.println("Hit N°"+i+" "+hit.toString()+" is completely destroyed!");
-				destroyedShips++;
-			}
-			i++;
-			//sleep(20);
-				
-		}
-		b1.print(b1.grille_frappe);
-		*/
-		/***************************************************************/
-		
-		
-		/********Human Player VS Artificial Intelligence Player********/
-		/*
-		Game game = new Game();
-		game.init(size, ships,ships1);
-		game.run();
-		*/
-		/*************************************************************/
-
-		/********************Two players mode*************************/
-		/*
-		GameTwoPlayers game = new GameTwoPlayers();
-		game.init(size, ships, ships1);
-		game.run();
-		*/
-		/************************************************************/
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	     }		
 }
 
 	

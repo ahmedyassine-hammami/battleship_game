@@ -1,6 +1,12 @@
 package Bataille_navale;
 
-public class ShipState {
+import java.io.Serializable;
+
+public class ShipState implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public AbstractShip ship ;
 	public boolean struck = false;
 
